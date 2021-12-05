@@ -20,19 +20,14 @@ def start(enemy):
 
 
 def door_or_cave(weapon, enemy):
-    while True:
-        print_pause("Enter 1 to knock on the door of the house.")
-        print_pause("Enter 2 to peer into the cave.")
-        print_pause("What would you like to do?")
-        player_input = int(input("(Please enter 1 or 2.)"))
-        if player_input == 1:
-            house(weapon, enemy)
-            break
-        elif player_input == 2:
-            cave(weapon, enemy)
-            break
-        else:
-            print_pause("Please enter a valid input\n")
+    print_pause("Enter 1 to knock on the door of the house.")
+    print_pause("Enter 2 to peer into the cave.")
+    print_pause("What would you like to do?")
+    player_input = validate_input("(Please enter 1 or 2.)", ["1", "2"])
+    if player_input == "1":
+        house(weapon, enemy)
+    else:
+        cave(weapon, enemy)
 
 
 def house(weapon, enemy):
@@ -50,23 +45,17 @@ def house(weapon, enemy):
 
 
 def fight_or_run(weapon, enemy):
-    while True:
-        player_input = \
-            int(input("Would you like to (1) fight or (2) run away?\n"))
-        if player_input == 1:
-            if weapon == "dagger":
-                enemy_win(enemy)
-                play_again()
-                break
-            else:
-                player_win(enemy)
-                play_again()
-                break
-        elif player_input == 2:
-            run_away(weapon, enemy)
-            break
+    player_input = validate_input(
+        "Would you like to (1) fight or (2) run away?\n", ["1", "2"])
+    if player_input == "1":
+        if weapon == "dagger":
+            enemy_win(enemy)
+            play_again()
         else:
-            print_pause("Please enter a valid input")
+            player_win(enemy)
+            play_again()
+    else:
+        run_away(weapon, enemy)
 
 
 def run_away(weapon, enemy):
@@ -109,17 +98,14 @@ def player_win(enemy):
 
 
 def play_again():
-    while True:
-        player_input = input("Would you like to play again? (y/n)")
-        if player_input == "y":
-            print_pause("Excellent!!!\nRestarting the game...\n")
-            game_start()
-            break
-        elif player_input == "n":
-            print_pause("Thanks for playing. See you later")
-            sys.exit()
-        else:
-            print_pause("Please enter a valid input\n")
+    player_input = validate_input(
+        "Would you like to play again? (y/n)", ["y", "n"])
+    if player_input == "y":
+        print_pause("Excellent!!!\nRestarting the game...\n")
+        game_start()
+    else:
+        print_pause("Thanks for playing. See you later")
+        sys.exit()
 
 
 def enemy_win(enemy):
@@ -134,6 +120,15 @@ def game_start():
     weapon = "dagger"
     start(enemy)
     door_or_cave(weapon, enemy)
+
+
+def validate_input(prompt, options):
+    while True:
+        option = input(prompt).lower()
+        if option not in options:
+            print_pause("Please enter a valid input\n")
+        else:
+            return option
 
 
 game_start()
