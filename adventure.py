@@ -114,14 +114,6 @@ def enemy_win(enemy):
     print_pause("You have been defeated!")
 
 
-def game_start():
-    enemy_list = ["pirate", "troll", "dragon", "gorgon", "wicked fairie"]
-    enemy = random.choice(enemy_list)
-    weapon = "dagger"
-    start(enemy)
-    door_or_cave(weapon, enemy)
-
-
 def validate_input(prompt, options):
     while True:
         option = input(prompt).lower()
@@ -131,4 +123,13 @@ def validate_input(prompt, options):
             return option
 
 
-game_start()
+def game_start():
+    enemy_list = ["pirate", "troll", "dragon", "gorgon", "wicked fairie"]
+    enemy = random.choice(enemy_list)
+    weapon = "dagger"
+    start(enemy)
+    door_or_cave(weapon, enemy)
+
+
+if __name__ == "__main__":
+    game_start()
